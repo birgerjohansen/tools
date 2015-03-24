@@ -26,16 +26,17 @@ for body in (moon, sun, mercury, venus, mars, jupiter, saturn):
 angles = sorted(angles, key=itemgetter(3))
 
 print('')
-print('Name     | Azimuth | Elevation | Azimuth diff | Angular sep')
-print('---------|---------|-----------|--------------|------------')
+print('| Name    | Azimuth | Elevation | Azimuth diff | Angular sep |')
+print('|---------|---------|-----------|--------------|-------------|')
 for bodyitems in angles:
     name, az, el, az_diff, sep = bodyitems
-    print(name.ljust(8), '|', "{:7.2f}".format(az), '|', \
+    print('|', name.ljust(7), '|', "{:7.2f}".format(az), '|', \
             "{:6.2f}".format(el).rjust(9), '|',\
             "{:6.2f}".format(az_diff).rjust(12), '|',\
-            "{:6.2f}".format(sep).rjust(11))
+            "{:6.2f}".format(sep).rjust(11), '|')
 
 print('')
+
 table = tabulate(angles, headers=('Name', 'Azimuth', 'Elevation', 'Azimuth diff', 'Angular sep'),
                  tablefmt='pipe', floatfmt='.1f')
-print(table)
+#print(table)
