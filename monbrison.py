@@ -21,33 +21,33 @@ def main(argv):
             sys.exit()                  
         elif opt in ("-p", "--period"):
             if not arg.isdigit():
-		print 'Period must be integer. Exiting...'
-		sys.exit(2)
+                print('Period must be integer. Exiting...')
+                sys.exit(2)
             period=int(arg)
         elif opt in ("-f", "--fromyear"):
             if not arg.isdigit():
-		print 'Start year must be integer. Exiting...'
-		sys.exit(2)
+                print('Start year must be integer. Exiting...')
+                sys.exit(2)
             fromyear=int(arg)
-	    toyear=fromyear
+            toyear=fromyear
         elif opt in ("-t", "--toyear"):
             if not arg.isdigit():
-		print 'End year must be integer. Exiting...'
-		sys.exit(2)
+                print('End year must be integer. Exiting...')
+                sys.exit(2)
             toyear=int(arg)
         elif opt in ("-y", "--yearmode"):
             yearmode=1
     source = " ".join(args)
     if len(source) > 0:
-        print 'Unknown parameters', source
+        print('Unknown parameters', source)
     if fromyear < 1999:
-	print '\nStarting from 1999...'
-	fromyear = 1999
-	if toyear < fromyear:
-	    toyear = fromyear
+        print('\nStarting from 1999...')
+        fromyear = 1999
+        if toyear < fromyear:
+            toyear = fromyear
     if fromyear > toyear:
-	print 'Start year > End year. Exiting...'
-	sys.exit(2)
+        print('Start year > End year. Exiting...')
+        sys.exit(2)
 
     periods = createperiodtable([[5, 3, 9, 4, 10, 11, 6, 12, 1, 7, 2, 8, 3, 9,
             4, 10, 5, 11, 6, 12, 8, 2, 7, 'Closed', 'Closed', 1]])
@@ -58,8 +58,8 @@ def main(argv):
     else:
         for year in range(fromyear, toyear + 1):
             printbyperiod(periods, period, year)
-    print 66*'-'
-    print ''
+    print(66*'-')
+    print('')
 
 def yeartorow(year):
     row = (year - 1999) % 12
@@ -77,7 +77,7 @@ def nextperiod(currentperiod):
 def createperiodtable(periods):
     dummy = periods[0]
     for n in range(0, 11):
-        dummy = map(nextperiod, dummy)
+        dummy = list(map(nextperiod, dummy))
         periods.append(dummy)
     return periods
 
@@ -131,26 +131,26 @@ def printbyyear(periods, year):
         
 
 def printresults(startweek, s, e, d, period, year):
-    print year, '|', str(period).rjust(6),'|', \
+    print(year, '|', str(period).rjust(6),'|', \
            str(startweek).rjust(2)+'-'+str(startweek+1).rjust(2), \
            '|', s.strftime('%a %d.%m.%Y'), '|', e.strftime('%a %d.%m.%Y'), \
-           '|', str(d)+' days'
+           '|', str(d)+' days')
     
 def printheader():
-    print ''
-    print 'Year | Period | Weeks | Start          | End            | Length'
-    print 66*'-'
+    print('')
+    print('Year | Period | Weeks | Start          | End            | Length')
+    print(66*'-')
 
 def usage():
-    print '\n\tMonbrison weekperiod calculator\n'
-    print '\tOptions:'
-    print '\t-h or --help\t\tHelp'
-    print '\t-p or --period\t\tPeriod'
-    print '\t-f or --fromyear\tStart year'
-    print '\t-t or --toyear\t\tEnd year'
-    print '\t-y or --yearmode\tPrint all periods from a year sorted by date'
-    print '\tDefult is current year as start year and current year as end year'
-    print '\tDefult period is 6\n'
+    print('\n\tMonbrison weekperiod calculator\n')
+    print('\tOptions:')
+    print('\t-h or --help\t\tHelp')
+    print('\t-p or --period\t\tPeriod')
+    print('\t-f or --fromyear\tStart year')
+    print('\t-t or --toyear\t\tEnd year')
+    print('\t-y or --yearmode\tPrint all periods from a year sorted by date')
+    print('\tDefult is current year as start year and current year as end year')
+    print('\tDefult period is 6\n')
 
 def iso_year_start(iso_year):
     "The gregorian calendar date of the first day of the given ISO year"
