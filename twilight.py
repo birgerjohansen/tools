@@ -14,7 +14,7 @@ now = datetime.datetime.today()
 
 site.lat = 59.917*np.pi/180
 site.lon = 10.75*np.pi/180
-tz = +1 
+tz = +2 
 
 tz_delta = datetime.timedelta(seconds=3600*tz)
 
@@ -31,10 +31,16 @@ print('|--------------------|-------|-------|')
 
 for n in range(4):
     site.horizon = horizons[n]
-    up = site.previous_rising(sun, use_center=center[n])
-    down = site.next_setting(sun, use_center=center[n])
-    d_up = up.datetime() + tz_delta
-    d_down = down.datetime() + tz_delta
-    print('|', twilights[n].ljust(18), '|',
-          d_up.strftime('%H:%M'), '|',
-          d_down.strftime('%H:%M'),'|')
+    try:
+        up = site.previous_rising(sun, use_center=center[n])
+        down = site.next_setting(sun, use_center=center[n])
+    except (e.AlwaysUpError, e.NeverUpError):
+        print('|', twilights[n].ljust(18), '|',
+                '--:--', '|',
+                '--:--', '|')
+    else:
+        d_up = up.datetime() + tz_delta
+        d_down = down.datetime() + tz_delta
+        print('|', twilights[n].ljust(18), '|',
+            d_up.strftime('%H:%M'), '|',
+            d_down.strftime('%H:%M'),'|')
